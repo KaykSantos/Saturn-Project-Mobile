@@ -8,12 +8,12 @@
 
     <link rel="stylesheet" href="components/loader.css">
     <!-- <link rel="stylesheet" href="css/style.css"> -->
-    <style>
+     <style>
         @charset "UTF-8";
             @import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
             #body-login{
                 font-family: 'Work Sans', sans-serif;
-                background-color: #bfddf8;
+                background-color: white;
                 margin: 0px;
                 padding: 0px;
             }
@@ -36,16 +36,17 @@
                 text-align: center;
                 justify-content: center;
                 align-items: center;
-                background-color: #1C618C;
+                background-color: white;
+                box-shadow: 4px 3px rgb(117, 114, 114);
             }
             #form-login input{
                 margin-top: 20px;
                 width: 100%;
             }
             #form-login p{
-                color: white;
+                color: black;
                 text-transform: uppercase;
-                font-size: 20px;
+                font-size: 025px;
                 font-weight: bold;
             }
             #form-login button{
@@ -74,7 +75,7 @@
                 font-size: 25px;
                 text-transform: uppercase;
                 font-weight: bold;
-                color: white
+                color: white;
             }
             #nav-login div a{
                 padding: 22px;
@@ -88,12 +89,16 @@
             .inputLogCad{
                 height: 25px;
                 padding: 5px;
-                border-radius: 5px;
+                border: 2px solid black;
+                border-radius: 2px;
                 border: none;
+                border-bottom:2px solid black;
                 outline: none;
+                background-color: white;
             }
             .inputLogCad:focus{
                 border-bottom: 2px solid black;
+                background-color: #d4efff;
             }
             .alerts{
                 text-align: center;
@@ -107,6 +112,7 @@
     <main id="main-login">
         <section id="section-login">
             <div id="form-login">
+                 <img src="imgs/saturn.jpg" width="110px">
                 <p>Login</p>
                 <input autocomplete="off" type="email" id="email" name="email" placeholder="Email" class="inputLogCad">
                 <input autocomplete="off" type="password" id="password" name="password" placeholder="Senha" class="inputLogCad">

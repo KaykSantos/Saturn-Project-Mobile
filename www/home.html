@@ -83,6 +83,21 @@
             }
             .noStyleA{
                 text-decoration: none;
+                color: white;
+            }
+            #btn{
+                border-radius: 5px;
+                outline: none;
+                border: none;
+                margin-top: 15px;
+                background-color: #0D0D0D;
+                color: white;
+                font-size: 15px;
+                text-transform: uppercase;
+                font-weight: bold;
+                color: white;
+                width: 110px;
+                height: 30px;
             }
     </style>
 </head>
@@ -94,26 +109,72 @@
     <main id="main-home">
         <div id="form-home">
             <p class="tituloCard">Atividades:</p>
-            <div class="card-home">
-                <p>Atividade: Título</p>
-                <p>Tag: Nome Tag</p>
-                <p>Vencimento: dd/mm/yyyy</p>
-                <button>Abrir</button>
+            <div id="ativ">
             </div>
-            <div class="card-home">
-                <p>Atividade: Título</p>
-                <p>Tag: Nome Tag</p>
-                <p>Vencimento: dd/mm/yyyy</p>
-                <button>Abrir</button>
-            </div>
-            <div class="card-home">
-                <p>Atividade: Título</p>
-                <p>Tag: Nome Tag</p>
-                <p>Vencimento: dd/mm/yyyy</p>
-                <button>Abrir</button>
-            </div>
-            <a href="atividades.html" class="noStyleA"><p class="tituloCard">Ver mais...</p></a>
-        </div>       
+            
+            <div id="vermais-ativ"></div>
+        </div>
+        <button id="btn"><a href="arquivos.html" class="noStyleA">Arquivos</a></button>
+    
     </main>
+    <script>
+        let usuario = JSON.parse(localStorage.usuario);
+        let url = 'https://bba.profrodolfo.com.br/saturn/php/atividade.php?emp='+usuario.empresa;
+        //console.log(url);
+        fetch(url)
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(function(json){
+                let a = document.querySelector('#ativ');
+                let b = document.querySelector('#vermais-ativ');
+                let texto = '';
+                let btn = '';
+                let i = 0;
+                let dt_entrega;
+
+                if(json.length > 4){
+                    for(i = 0; i < json.length; i++){
+                        dt_entrega = json[i].dt_entrega.split('-').reverse().join('/');
+
+                        texto += '<div class="card-home">';
+                        texto += '<p>Atividade: '+json[i].nm_atividade+'</p>';
+                        texto += '<p>Tag: '+json[i].nm_tag+'</p>';
+                        texto += '<p>Vencimento: '+dt_entrega+'</p>';
+                        texto += '<button onclick="teste('+json[i].cd+')">Abrir</button>';
+                        texto += '</div>';
+                        
+                        if(i == 2){
+                            break;
+                        }
+                    }
+
+                    btn = '<a href="atividades.html" class="noStyleA"><p class="tituloCard">Ver mais...</p></a>';
+                    b.innerHTML = btn;
+                    a.innerHTML += texto;
+                }else{
+                    for(i = 0; i < json.length; i++){
+                        dt_entrega = json[i].dt_entrega.split('-').reverse().join('/');
+
+                        texto += '<div class="card-home">';
+                        texto += '<p>Atividade: '+json[i].nm_atividade+'</p>';
+                        texto += '<p>Tag: '+json[i].nm_tag+'</p>';
+                        texto += '<p>Vencimento: '+dt_entrega+'</p>';
+                        texto += '<button onclick="teste('+json[i].cd+')">Abrir</button>';
+                        texto += '</div>';
+                    }
+                    a.innerHTML += texto;
+                }
+                
+            })
+        .catch();
+        function teste(cd){
+            let ativ = cd;
+            var cdAtiv = JSON.stringify(ativ);
+            sessionStorage.setItem('codAtiv', cdAtiv );
+            window.location.href = "individual.html";
+            // var dadosArquivados = JSON.parse(sessionStorage.getItem('chave'));
+        }
+    </script>
 </body>
 </html>

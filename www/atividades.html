@@ -26,7 +26,7 @@
             }
             .tituloCard{
                 margin-top: 5px;
-                margin-left: 7%;
+                margin-left: 2vw;
                 margin-bottom: 0px;
                 font-size: 20px;
                 font-weight: bold;
@@ -38,6 +38,7 @@
                 border-radius: 10px;
                 border: 1px solid black;
                 box-shadow: 4px 3px rgb(117, 114, 114);
+                padding-bottom: 20px;
             }
             .card-ativ{
                 border: 1px solid black;
@@ -84,6 +85,7 @@
             }
             .noStyleA{
                 text-decoration: none;
+                color: white;
             }
     </style>
 </head>
@@ -94,62 +96,44 @@
     </nav>
     <main id="main-ativ">
         <div id="form-ativ">
-            <p class="tituloCard">Atividades:</p>
-            <div class="card-ativ">
-                <p>Atividade: Título (1)</p>
-                <p>Tag: Nome Tag</p>
-                <p>Vencimento: dd/mm/yyyy</p>
-                <button>Abrir</button>
-            </div>
-            <div class="card-ativ">
-                <p>Atividade: Título (2)</p>
-                <p>Tag: Nome Tag</p>
-                <p>Vencimento: dd/mm/yyyy</p>
-                <button>Abrir</button>
-            </div>
-            <div class="card-ativ">
-                <p>Atividade: Título (3)</p>
-                <p>Tag: Nome Tag</p>
-                <p>Vencimento: dd/mm/yyyy</p>
-                <button>Abrir</button>
-            </div>
-            <div class="card-ativ">
-                <p>Atividade: Título (4)</p>
-                <p>Tag: Nome Tag</p>
-                <p>Vencimento: dd/mm/yyyy</p>
-                <button>Abrir</button>
-            </div>
-            <div class="card-ativ">
-                <p>Atividade: Título (5)</p>
-                <p>Tag: Nome Tag</p>
-                <p>Vencimento: dd/mm/yyyy</p>
-                <button>Abrir</button>
-            </div>
-            <div class="card-ativ">
-                <p>Atividade: Título (6)</p>
-                <p>Tag: Nome Tag</p>
-                <p>Vencimento: dd/mm/yyyy</p>
-                <button>Abrir</button>
-            </div>
-            <div class="card-ativ">
-                <p>Atividade: Título (7)</p>
-                <p>Tag: Nome Tag</p>
-                <p>Vencimento: dd/mm/yyyy</p>
-                <button>Abrir</button>
-            </div>
-            <div class="card-ativ">
-                <p>Atividade: Título (8)</p>
-                <p>Tag: Nome Tag</p>
-                <p>Vencimento: dd/mm/yyyy</p>
-                <button>Abrir</button>
-            </div>
-            <div class="card-ativ">
-                <p>Atividade: Título (9)</p>
-                <p>Tag: Nome Tag</p>
-                <p>Vencimento: dd/mm/yyyy</p>
-                <button>Abrir</button>
-            </div>
+            <p class="tituloCard">Atividade:</p>
+            <div id="ativ"></div>
         </div>       
     </main>
+    <script>
+        let usuario = JSON.parse(localStorage.usuario);
+        let url = 'https://bba.profrodolfo.com.br/saturn/php/atividade.php?emp='+usuario.empresa;
+        //console.log(url);
+        fetch(url)
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(function(json){
+                let a = document.querySelector('#ativ');
+                let b = document.querySelector('#vermais');
+                let texto = '';
+                let dt_entrega;
+                
+                    for(i = 0; i < json.length; i++){
+                        dt_entrega = json[i].dt_entrega.split('-').reverse().join('/');
+
+                        texto += '<div class="card-ativ">';
+                        texto += '<p>Atividade: '+json[i].nm_atividade+'</p>';
+                        texto += '<p>Tag: '+json[i].nm_tag+'</p>';
+                        texto += '<p>Vencimento: '+dt_entrega+'</p>';
+                        texto += '<button onclick="teste('+json[i].cd+')">Abrir</button>';
+                        texto += '</div>';
+                    }
+                    a.innerHTML += texto;
+            })
+        .catch();
+        function teste(cd){
+            let ativ = cd;
+            var cdAtiv = JSON.stringify(ativ);
+            sessionStorage.setItem('codAtiv', cdAtiv );
+            window.location.href = "individual.html";
+            // var dadosArquivados = JSON.parse(sessionStorage.getItem('chave'));
+        }
+    </script>
 </body>
 </html>

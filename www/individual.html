@@ -115,12 +115,15 @@
                 let dt_entrega;
                 
                     for(i = 0; i < json.length; i++){
+                        dt_postagem = json[i].dt_postagem.split('-').reverse().join('/');
                         dt_entrega = json[i].dt_entrega.split('-').reverse().join('/');
-
                         texto += '<div class="card-ativ">';
                         texto += '<p>Atividade: '+json[i].nm_atividade+'</p>';
+                        texto += '<p>Descrição: '+json[i].ds_atividade+'</p>';
                         texto += '<p>Tag: '+json[i].nm_tag+'</p>';
+                        texto += '<p>Status: '+json[i].status_atividade+'</p>';
                         texto += '<p>Vencimento: '+dt_entrega+'</p>';
+                        texto += '<p>Postado por: '+json[i].nm_usuario+', em '+dt_postagem+'.</p>';
                         texto += '</div>';
                     }
                     
